@@ -3,21 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Countdown Timer</title>
+    <title>YouTube Style Countdown Timer</title>
     <link rel="stylesheet" href="styles.css"> <!-- Link to CSS file -->
 </head>
 <body>
     <div id="countdown">
-        <h1>Countdown Timer</h1>
+        <h1>Countdown to Premiere</h1>
         <div id="timer">
-            <span id="days"></span> days 
-            <span id="hours"></span> hours 
-            <span id="minutes"></span> minutes 
-            <span id="seconds"></span> seconds
+            <div class="time-box">
+                <span id="days"></span>
+                <p>Days</p>
+            </div>
+            <div class="time-box">
+                <span id="hours"></span>
+                <p>Hours</p>
+            </div>
+            <div class="time-box">
+                <span id="minutes"></span>
+                <p>Minutes</p>
+            </div>
+            <div class="time-box">
+                <span id="seconds"></span>
+                <p>Seconds</p>
+            </div>
         </div>
         <p id="expired" style="display:none;">EXPIRED</p>
     </div>
-    
+
     <script src="script.js"></script> <!-- Link to JavaScript file -->
 </body>
 </html>
