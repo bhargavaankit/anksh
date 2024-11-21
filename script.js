@@ -1,5 +1,6 @@
 var ringer = {
-  countdown_to: "10/10/2018",
+  //countdown_to: "10/31/2014",
+  countdown_to: "10/31/2025",
   rings: {
     'DAYS': { 
       s: 86400000, // mseconds in a day,
@@ -25,7 +26,7 @@ var ringer = {
   r_count: 5,
   r_spacing: 10, // px
   r_size: 100, // px
-  r_thickness: 5, // px
+  r_thickness: 2, // px
   update_interval: 11, // ms
     
     
@@ -44,7 +45,7 @@ var ringer = {
     $r.cvs.setAttribute('width',$r.size.w);           
     $r.cvs.setAttribute('height',$r.size.h);
     $r.ctx = $r.cvs.getContext('2d');
-    $(".countdownwrap").append($r.cvs);
+    $(document.body).append($r.cvs);
     $r.cvs = $($r.cvs);    
     $r.ctx.textAlign = 'center';
     $r.actual_size = $r.r_size + $r.r_thickness;
@@ -99,7 +100,7 @@ var ringer = {
     $r.ctx.stroke();
     
     // label
-    $r.ctx.fillStyle = "#000000";
+    $r.ctx.fillStyle = "#ffffff";
    
     $r.ctx.font = '12px Helvetica';
     $r.ctx.fillText(label, 0, 23);
