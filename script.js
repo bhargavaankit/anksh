@@ -1,56 +1,68 @@
-const countDownClock = (number = 100, format = 'seconds') => {
-  
-  const d = document;
-  const daysElement = d.querySelector('.days');
-  const hoursElement = d.querySelector('.hours');
-  const minutesElement = d.querySelector('.minutes');
-  const secondsElement = d.querySelector('.seconds');
-  let countdown;
-  convertFormat(format);
-  
-  
-  function convertFormat(format) {
-    switch(format) {
-      case 'seconds':
-        return timer(number);
-      case 'minutes':
-        return timer(number * 60);
-        case 'hours':
-        return timer(number * 60 * 60);
-      case 'days':
-        return timer(number * 60 * 60 * 24);             
-    }
-  }
+var labels = ['weeks', 'days', 'hours', 'minutes', 'seconds'],
+	TimerCount = (new Date().getFullYear() + 1) + '/01/01',
+	template = _.template( jQuery('#main-example-template').html()),
+	currDate = '00:00:00:00:00',
+	nextDate = '00:00:00:00:00',
+	parser = /([0-9]{2})/gi,
+	$example = jQuery('#main-example');
 
-  function timer(seconds) {
-    const now = Date.now();
-    const then = now + seconds * 1000;
+	if( $example.data("timer").length ){
+		TimerCount = $example.data("timer");	
+	}
 
-    countdown = setInterval(() => {
-      const secondsLeft = Math.round((then - Date.now()) / 1000);
-
-      if(secondsLeft <= 0) {
-        clearInterval(countdown);
-        return;
-      };
-
-      displayTimeLeft(secondsLeft);
-
-    },1000);
-  }
-
-  function displayTimeLeft(seconds) {
-    daysElement.textContent = Math.floor(seconds / 86400);
-    hoursElement.textContent = Math.floor((seconds % 86400) / 3600);
-    minutesElement.textContent = Math.floor((seconds % 86400) % 3600 / 60);
-    secondsElement.textContent = seconds % 60 < 10 ? `0${seconds % 60}` : seconds % 60;
-  }
+// Parse countdown string to an object
+function strfobj(str) {
+	var parsed = str.match(parser),
+		obj = {};
+	labels.forEach(function(label, i) {
+		obj[label] = parsed[i]
+	});
+	return obj;
 }
+// Return the time components that diffs
+function diff(obj1, obj2) {
+	var diff = [];
+	labels.forEach(function(key) {
+		if (obj1[key] !== obj2[key]) {
+			diff.push(key);
+		}
+	});
+	return diff;
+}
+// Build the layout
+var initData = strfobj(currDate);
+labels.forEach(function(label, i) {
+	$example.append(template({
+		curr: initData[label],
+		next: initData[label],
+		label: label
+	}));
+});
+// Starts the countdown
+$example.countdown(TimerCount, function(event) {
+	var newDate = event.strftime('%w:%d:%H:%M:%S'),
+		data;
 
-
-/*
-  start countdown
-  enter number and format
-  days, hours, minutes or seconds
-*/
-countDownClock(20, 'days');
+	if (newDate !== nextDate) {
+		currDate = nextDate;
+		nextDate = newDate;
+		// Setup the data
+		data = {
+			'curr': strfobj(currDate),
+			'next': strfobj(nextDate)
+		};
+		// Apply the new values to each node that changed
+		diff(data.curr, data.next).forEach(function(label) {
+			var selector = '.%s'.replace(/%s/, label),
+				$node = $example.find(selector);
+			// Update the node
+			$node.removeClass('flip');
+			$node.find('.curr').text(data.curr[label]);
+			$node.find('.next').text(data.next[label]);
+			// Wait for a repaint to then flip
+			_.delay(function($node) {
+				$node.addClass('flip');
+			}, 50, $node);
+		});
+	}
+});
