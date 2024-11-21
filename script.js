@@ -140,7 +140,7 @@
 $(function(){
 
     var note = $('#note'),
-        ts = new Date("2024-12-06"),
+        ts = new Date("2024-12-06 00:00:00"),
         newYear = true;
 
     if((new Date()) > ts){
@@ -161,12 +161,7 @@ $(function(){
             message += minutes + " minute" + ( minutes==1 ? '':'s' ) + " and ";
             message += seconds + " second" + ( seconds==1 ? '':'s' ) + " <br />";
 
-            if(newYear){
-                message += "left until the new year!";
-            }
-            else {
-                message += "left for wedding!";
-            }
+            message += "left for wedding!";
 
             note.html(message);
         }
