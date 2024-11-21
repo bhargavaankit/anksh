@@ -3,31 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>YouTube Style Countdown Timer</title>
+    <title>Countdown Timer with Ring</title>
     <link rel="stylesheet" href="styles.css"> <!-- Link to CSS file -->
 </head>
 <body>
-    <div id="countdown">
-        <h1>Countdown to Premiere</h1>
-        <div id="timer">
-            <div class="time-box">
-                <span id="days"></span>
-                <p>Days</p>
-            </div>
-            <div class="time-box">
-                <span id="hours"></span>
-                <p>Hours</p>
-            </div>
-            <div class="time-box">
-                <span id="minutes"></span>
-                <p>Minutes</p>
-            </div>
-            <div class="time-box">
-                <span id="seconds"></span>
-                <p>Seconds</p>
-            </div>
-        </div>
-        <p id="expired" style="display:none;">EXPIRED</p>
+    <div class="countdown-container">
+        <svg class="base-timer" viewBox="0 0 100 100">
+            <g class="base-timer__circle">
+                <circle class="base-timer__path-elapsed" cx="50" cy="50" r="45"></circle>
+                <circle class="base-timer__path-remaining" cx="50" cy="50" r="45"></circle>
+            </g>
+        </svg>
+        <span id="base-timer-label" class="base-timer__label">00:00</span>
     </div>
 
     <script src="script.js"></script> <!-- Link to JavaScript file -->
