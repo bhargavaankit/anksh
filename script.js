@@ -140,7 +140,7 @@
 $(function(){
 
     var note = $('#note'),
-        ts = new Date(2012, 0, 1),
+        ts = new Date(2025, 1, 1),
         newYear = true;
 
     if((new Date()) > ts){
