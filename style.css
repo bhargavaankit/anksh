@@ -4,7 +4,8 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background-color: #f4f4f4;
+    background-color: #282c34;
+    color: white;
 }
 
 #countdown {
@@ -12,5 +13,22 @@ body {
 }
 
 #timer {
+    display: flex;
+    justify-content: center;
+}
+
+.time-box {
+    margin: 0 15px;
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.time-box span {
+    font-size: 3em;
+}
+
+#expired {
     font-size: 2em;
+    color: red;
 }
