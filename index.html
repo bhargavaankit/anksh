@@ -8,29 +8,18 @@
 </head>
 <body>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-    <section class="countdown-container">
-  
-  <div class="days-container">
-    <div class="days"></div>
-    <div class="days-label">days</div>
-  </div>
-  
-  <div class="hours-container">
-    <div class="hours"></div>
-    <div class="hours-label">hours</div>
-  </div>
-  
-  <div class="minutes-container">
-    <div class="minutes"></div>
-    <div class="minutes-label">minutes</div>
-  </div>
-  
-  <div class="seconds-container">
-    <div class="seconds"></div>
-    <div class="seconds-label">seconds</div>
-  </div>
-  
-</section>
+<div class="main-example">
+<div class="countdown-container" data-timer="2030/09/05" id="main-example"></div>
+</div>
+<script type="text/template" id="main-example-template">
+<div class="time <%= label %>">
+  <span class="count curr top"><%= curr %></span>
+  <span class="count next top"><%= next %></span>
+  <span class="count next bottom"><%= next %></span>
+  <span class="count curr bottom"><%= curr %></span>
+  <span class="label"><%= label.length < 6 ? label : label.substr(0, 3)  %></span>
+</div>
+</script>
     <script src="script.js"></script> <!-- Link to JavaScript file -->
 </body>
 </html>
