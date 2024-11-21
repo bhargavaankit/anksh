@@ -1,116 +1,56 @@
-var ringer = {
-  //countdown_to: "10/31/2014",
-  countdown_to: "10/31/2025",
-  rings: {
-    'DAYS': { 
-      s: 86400000, // mseconds in a day,
-      max: 365
-    },
-    'HOURS': {
-      s: 3600000, // mseconds per hour,
-      max: 24
-    },
-    'MINUTES': {
-      s: 60000, // mseconds per minute
-      max: 60
-    },
-    'SECONDS': {
-      s: 1000,
-      max: 60
-    },
-    'MICROSEC': {
-      s: 10,
-      max: 100
+const countDownClock = (number = 100, format = 'seconds') => {
+  
+  const d = document;
+  const daysElement = d.querySelector('.days');
+  const hoursElement = d.querySelector('.hours');
+  const minutesElement = d.querySelector('.minutes');
+  const secondsElement = d.querySelector('.seconds');
+  let countdown;
+  convertFormat(format);
+  
+  
+  function convertFormat(format) {
+    switch(format) {
+      case 'seconds':
+        return timer(number);
+      case 'minutes':
+        return timer(number * 60);
+        case 'hours':
+        return timer(number * 60 * 60);
+      case 'days':
+        return timer(number * 60 * 60 * 24);             
     }
-   },
-  r_count: 5,
-  r_spacing: 10, // px
-  r_size: 100, // px
-  r_thickness: 2, // px
-  update_interval: 11, // ms
-    
-    
-  init: function(){
-   
-    $r = ringer;
-    $r.cvs = document.createElement('canvas'); 
-    
-    $r.size = { 
-      w: ($r.r_size + $r.r_thickness) * $r.r_count + ($r.r_spacing*($r.r_count-1)), 
-      h: ($r.r_size + $r.r_thickness) 
-    };
-    
+  }
 
+  function timer(seconds) {
+    const now = Date.now();
+    const then = now + seconds * 1000;
 
-    $r.cvs.setAttribute('width',$r.size.w);           
-    $r.cvs.setAttribute('height',$r.size.h);
-    $r.ctx = $r.cvs.getContext('2d');
-    $(document.body).append($r.cvs);
-    $r.cvs = $($r.cvs);    
-    $r.ctx.textAlign = 'center';
-    $r.actual_size = $r.r_size + $r.r_thickness;
-    $r.countdown_to_time = new Date($r.countdown_to).getTime();
-    $r.cvs.css({ width: $r.size.w+"px", height: $r.size.h+"px" });
-    $r.go();
-  },
-  ctx: null,
-  go: function(){
-    var idx=0;
-    
-    $r.time = (new Date().getTime()) - $r.countdown_to_time;
-    
-    
-    for(var r_key in $r.rings) $r.unit(idx++,r_key,$r.rings[r_key]);      
-    
-    setTimeout($r.go,$r.update_interval);
-  },
-  unit: function(idx,label,ring) {
-    var x,y, value, ring_secs = ring.s;
-    value = parseFloat($r.time/ring_secs);
-    $r.time-=Math.round(parseInt(value)) * ring_secs;
-    value = Math.abs(value);
-    
-    x = ($r.r_size*.5 + $r.r_thickness*.5);
-    x +=+(idx*($r.r_size+$r.r_spacing+$r.r_thickness));
-    y = $r.r_size*.5;
-    y += $r.r_thickness*.5;
+    countdown = setInterval(() => {
+      const secondsLeft = Math.round((then - Date.now()) / 1000);
 
-    
-    // calculate arc end angle
-    var degrees = 360-(value / ring.max) * 360.0;
-    var endAngle = degrees * (Math.PI / 180);
-    
-    $r.ctx.save();
+      if(secondsLeft <= 0) {
+        clearInterval(countdown);
+        return;
+      };
 
-    $r.ctx.translate(x,y);
-    $r.ctx.clearRect($r.actual_size*-0.5,$r.actual_size*-0.5,$r.actual_size,$r.actual_size);
+      displayTimeLeft(secondsLeft);
 
-    // first circle
-    $r.ctx.strokeStyle = "rgba(128,128,128,0.2)";
-    $r.ctx.beginPath();
-    $r.ctx.arc(0,0,$r.r_size/2,0,2 * Math.PI, 2);
-    $r.ctx.lineWidth =$r.r_thickness;
-    $r.ctx.stroke();
-   
-    // second circle
-    $r.ctx.strokeStyle = "rgba(253, 128, 1, 0.9)";
-    $r.ctx.beginPath();
-    $r.ctx.arc(0,0,$r.r_size/2,0,endAngle, 1);
-    $r.ctx.lineWidth =$r.r_thickness;
-    $r.ctx.stroke();
-    
-    // label
-    $r.ctx.fillStyle = "#ffffff";
-   
-    $r.ctx.font = '12px Helvetica';
-    $r.ctx.fillText(label, 0, 23);
-    $r.ctx.fillText(label, 0, 23);   
-    
-    $r.ctx.font = 'bold 40px Helvetica';
-    $r.ctx.fillText(Math.floor(value), 0, 10);
-    
-    $r.ctx.restore();
+    },1000);
+  }
+
+  function displayTimeLeft(seconds) {
+    daysElement.textContent = Math.floor(seconds / 86400);
+    hoursElement.textContent = Math.floor((seconds % 86400) / 3600);
+    minutesElement.textContent = Math.floor((seconds % 86400) % 3600 / 60);
+    secondsElement.textContent = seconds % 60 < 10 ? `0${seconds % 60}` : seconds % 60;
   }
 }
 
-ringer.init();
+
+/*
+  start countdown
+  enter number and format
+  days, hours, minutes or seconds
+*/
+countDownClock(20, 'days');
