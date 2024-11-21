@@ -1,34 +1,43 @@
 body {
-    font-family: Arial, sans-serif;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
     background-color: #282c34;
     color: white;
+    font-family: Arial, sans-serif;
 }
 
-#countdown {
-    text-align: center;
+.countdown-container {
+    position: relative;
+    width: 200px;
+    height: 200px;
 }
 
-#timer {
-    display: flex;
-    justify-content: center;
+.base-timer {
+    position: absolute;
+    transform: rotate(-90deg);
 }
 
-.time-box {
-    margin: 0 15px;
-    background-color: rgba(255, 255, 255, 0.1);
-    padding: 20px;
-    border-radius: 10px;
+.base-timer__circle {
+    fill: none;
 }
 
-.time-box span {
-    font-size: 3em;
+.base-timer__path-elapsed {
+    stroke: #4caf50; /* Color for the elapsed time */
+    stroke-width: 7;
 }
 
-#expired {
+.base-timer__path-remaining {
+    stroke: #f44336; /* Color for the remaining time */
+    stroke-width: 7;
+    stroke-dasharray: 283; /* Circumference of the circle */
+}
+
+.base-timer__label {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     font-size: 2em;
-    color: red;
 }
