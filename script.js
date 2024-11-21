@@ -161,7 +161,7 @@ $(function(){
             message += minutes + " minute" + ( minutes==1 ? '':'s' ) + " and ";
             message += seconds + " second" + ( seconds==1 ? '':'s' ) + " <br />";
 
-            message += "left for wedding!";
+            message += "left for the Wedding!";
 
             note.html(message);
         }
